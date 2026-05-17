@@ -1,7 +1,14 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from '@/pages/Home'
+import Search from '@/pages/Search'
+
 export default function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-red-500 text-white">
-    Helo Word
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+      </Routes>
+    </BrowserRouter>
   );
-}  
+}
