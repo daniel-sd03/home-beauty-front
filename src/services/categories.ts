@@ -1,15 +1,14 @@
-export interface Category {
-  id: string;
+// COMO DEVE FICAR (Usando a nossa 'api' do Axios)
+import { api } from './api' // <--- Importa o arquivo api.ts que criamos
+
+interface Category {
+  id: number;
   name: string;
   iconName: string;
 }
 
 export async function getCategories(): Promise<Category[]> {
-  const response = await fetch('http://localhost:8080/categories')
-
-  if (!response.ok) {
-    throw new Error('Falha ao buscar categorias')
-  }
-
-  return response.json()
+  const response = await api.get('/categories')
+  
+  return response.data
 }
