@@ -1,8 +1,7 @@
-import { Search, Filter, ChevronLeft } from "lucide-react"
 import { LayoutContainer } from "@/components/layout-container"
-import { Logo } from "@/components/logo"
 import { Footer as SiteFooter } from "@/components/footer"
 import { ProfessionalSearchCard } from "@/components/professional-search-card"
+import { Header } from '@/components/header'
 
 const mockData = [
     {
@@ -115,35 +114,7 @@ export default function SearchPage() {
     <main className="flex min-h-screen flex-col bg-background">
       <div className="flex-1">
         {/* Header Fixo */}
-        <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/40">
-            <LayoutContainer as="header" className="flex items-center justify-between py-4 gap-4">
-                <button onClick={() => window.history.back()} 
-                    className="p-2 -ml-2 text-foreground hover:bg-card rounded-full sm:hidden"
-                    aria-label="Voltar">
-                    <ChevronLeft size={24} />
-                </button>
-                <div className="flex-shrink-0 hidden sm:block">
-                    <Logo />
-                </div>
-                <div className="flex-1 max-w-md">
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
-                        <input type="text" placeholder="O que você busca hoje?" className="w-full bg-card/50 border border-border rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 outline-none" />
-                    </div>
-                </div>
-                <button className="rounded-full bg-primary px-6 py-2 text-sm font-medium text-white">Entrar</button>
-            </LayoutContainer>
-
-            {/* Filtros */}
-            <LayoutContainer className="pb-4 flex gap-2 overflow-x-auto no-scrollbar">
-                <button className="flex items-center gap-2 px-4 py-2 border border-border rounded-full text-xs font-medium hover:bg-card whitespace-nowrap">
-                    <Filter size={14} /> Filtros
-                </button>
-                {['Distância', 'Avaliação', 'Preço', 'Categorias'].map(f => (
-                    <button key={f} className="px-4 py-2 border border-border rounded-full text-xs font-medium hover:bg-card whitespace-nowrap">{f}</button>
-                ))}
-            </LayoutContainer>
-        </div>  
+        <Header variant="search" />
 
         {/* Lista de Resultados */}
         <LayoutContainer className="py-8 space-y-10">

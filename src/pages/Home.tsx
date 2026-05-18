@@ -1,13 +1,13 @@
-import { Search } from "lucide-react"
 import { CategoryCard } from '@/components/category-card'
 import { HeroSection } from '@/components/hero-section'
 import { LayoutContainer } from '@/components/layout-container'
-import { Logo } from '@/components/logo'
 import { ProfessionalCard } from '@/components/professional-card'
 import { SectionHeader } from '@/components/section-header'
 import { Footer as SiteFooter } from '@/components/footer'
 import { useCategories } from '@/hooks/use-categories'
 import { iconMap } from '@/lib/icons'
+import { Header } from '@/components/header'
+
 
 
 // Professionals data (kept static for now)
@@ -26,38 +26,7 @@ export default function Home() {
       <div className="flex-1">
         
         {/* Header section */}
-        <LayoutContainer as="header" className="flex items-center justify-between py-6 md:py-8 gap-4">
-          <div className="flex-shrink-0">
-            <Logo />
-          </div>
-
-          {/* Search bar section */}
-          <div className="hidden flex-1 max-w-md sm:block">
-            <div className="relative group">
-              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-primary transition-colors">
-                <Search size={18} />
-              </div>
-              <input
-                type="text"
-                placeholder="Buscar serviços ou profissionais..."
-                className="w-full bg-card/50 border border-border rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-              />
-            </div>
-          </div>
-
-          {/* Main navigation section */}
-          <nav aria-label="Navegação principal" className="flex items-center gap-4 md:gap-8 flex-shrink-0">
-            <a href="#categorias" className="hidden text-sm font-medium text-foreground/80 transition-colors hover:text-primary lg:block">
-              Categorias
-            </a>
-            <a href="#profissionais" className="hidden text-sm font-medium text-foreground/80 transition-colors hover:text-primary lg:block">
-              Profissionais
-            </a>
-            <a href="#entrar" className="rounded-full border border-border bg-background px-5 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:text-primary whitespace-nowrap">
-              Entrar
-            </a>
-          </nav>
-        </LayoutContainer>
+        <Header variant="home" />
 
         {/* Hero section */}
         <LayoutContainer as="section" className="mt-2 md:mt-4">
