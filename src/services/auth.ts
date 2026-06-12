@@ -1,6 +1,6 @@
-import { api } from './api' 
+import { api } from './api'
 
-interface LoginResponse {
+export interface LoginResponse {
   token: string;
   role: 'USER' | 'PROFESSIONAL' | 'ADMIN';
   isProfileComplete: boolean;
@@ -9,14 +9,10 @@ interface LoginResponse {
 export async function loginUser(login: string, password: string): Promise<LoginResponse> {
   try {
     const response = await api.post<LoginResponse>('/auth/login', { login, password })
-<<<<<<< Updated upstream
-    
-    return response.data.token
-=======
+   
     return response.data
->>>>>>> Stashed changes
 
-  } catch (error) {
+  } catch (error: any) {
     const status = error.response?.status
     const backendMessage = (error.response?.data?.message || '').toLowerCase()
 
@@ -26,8 +22,6 @@ export async function loginUser(login: string, password: string): Promise<LoginR
 
     throw error;
   }
-<<<<<<< Updated upstream
-=======
 }
 
 export async function registerUser(
@@ -65,7 +59,6 @@ export async function completeClientProfile(phone: string, cpf: string, birthDat
   return response.data
 }
 
-
 export async function verifyAccountEmail(email: string, code: string) {
   try {
     const response = await api.post('/auth/verify', {
@@ -93,5 +86,4 @@ export async function resendCodeEmail(email: string) {
     }
     throw new Error('Não foi possível reenviar o código. Tente novamente mais tarde.')
   }
->>>>>>> Stashed changes
 }
