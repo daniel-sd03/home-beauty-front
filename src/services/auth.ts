@@ -9,8 +9,7 @@ export interface LoginResponse {
 export async function loginUser(login: string, password: string): Promise<LoginResponse> {
   try {
     const response = await api.post<LoginResponse>('/auth/login', { login, password })
-    
-    // Retornando o objeto completo, como refatoramos!
+   
     return response.data
 
   } catch (error: any) {
@@ -48,6 +47,16 @@ export async function registerUser(
     }
     throw new Error('Não foi possível criar sua conta. Verifique os dados e tente novamente.')
   }
+}
+
+export async function completeClientProfile(phone: string, cpf: string, birthDate: string, gender: string) {
+  const response = await api.put('/users/me/profile', {
+    phone,
+    cpf,
+    birthDate,
+    gender
+  })
+  return response.data
 }
 
 export async function verifyAccountEmail(email: string, code: string) {
