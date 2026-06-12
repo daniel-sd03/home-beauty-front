@@ -80,7 +80,7 @@ export default function Login() {
             localStorage.setItem('role', response.role)
             localStorage.setItem('isProfileComplete', String(response.isProfileComplete))
             
-            navigate('/') 
+            navigate('/inicio') 
             
         } catch (err: any) {
             console.error(err)

@@ -9,7 +9,7 @@ export interface LoginResponse {
 export async function loginUser(login: string, password: string): Promise<LoginResponse> {
   try {
     const response = await api.post<LoginResponse>('/auth/login', { login, password })
-   
+
     return response.data
 
   } catch (error: any) {
@@ -58,6 +58,32 @@ export async function completeClientProfile(phone: string, cpf: string, birthDat
   })
   return response.data
 }
+
+export async function completeProfessionalProfile(
+  phone: string,
+  cpf: string,
+  birthDate: string,
+  gender: string,
+  description: string,
+  whatsapp: string,
+  instagramHandle: string,
+  serviceRadiusKm: number,
+  specialtyIds: string[]
+) {
+  const response = await api.post('/professionals/profile/me/onboarding', {
+    phone,
+    cpf,
+    birthDate,
+    gender,
+    description,
+    whatsapp,
+    instagramHandle,
+    serviceRadiusKm,
+    specialtyIds
+  })
+  return response.data
+}
+
 
 export async function verifyAccountEmail(email: string, code: string) {
   try {

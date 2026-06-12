@@ -5,6 +5,8 @@ import Login from "@/pages/Login";
 import { ProtectedRoute } from "@/routes/ProtectedRoute"
 import Register from "@/pages/Register";
 import VerificarEmail from "@/pages/VerificarEmail";
+import CompleteProfileClient from "@/pages/CompleteProfileClient";
+import CompleteProfileProfessional from "@/pages/CompleteProfileProfessional";
 
 export default function App() {
   return (
@@ -12,16 +14,16 @@ export default function App() {
       <Routes>
 
         {/* Public Routes: Accessible to everyone */}
-        <Route path="/" element={<Home />} />
+        <Route path="/inicio" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/pesquisar" element={<Search />} />
         <Route path="/registrar" element={<Register />} />
         <Route path="/verificar-email" element={<VerificarEmail />} />
         
-        
         {/* Protected Routes: Require valid authentication token */}
         <Route element={<ProtectedRoute />}>
-          {/* Any route placed inside here will trigger the token validation */}
+          <Route path="/completar-cadastro" element={<CompleteProfileClient />} />
+          <Route path="/completar-cadastro-profissional" element={<CompleteProfileProfessional />} />
         </Route>
 
       </Routes>
