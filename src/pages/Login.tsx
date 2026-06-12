@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Eye, EyeOff, Mail, Lock, LogIn } from 'lucide-react'
 import { cn } from "@/lib/utils"
 import { loginUser } from '@/services/auth'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     icon: React.ReactNode
@@ -74,12 +74,22 @@ export default function Login() {
         setError('')
 
         try {
-            const token = await loginUser(email, password)
-            localStorage.setItem('token', token)
-            navigate('/') // Redirect to home on success
+            const response = await loginUser(email, password)
+            
+            localStorage.setItem('token', response.token)
+            localStorage.setItem('role', response.role)
+            localStorage.setItem('isProfileComplete', String(response.isProfileComplete))
+            
+            navigate('/') 
+            
         } catch (err: any) {
             console.error(err)
-            setError(err.message)
+
+            if (err.code === 'UNVERIFIED_EMAIL') {
+                return navigate('/verificar-email', { state: { email: email } })
+            }
+
+            setError(err.response?.data?.message || err.message || 'Credenciais inválidas.')
         } finally {
             setIsLoading(false)
         }
@@ -205,9 +215,9 @@ export default function Login() {
                     {/* Standard Client Registration */}
                     <div className="mt-8 text-center text-sm text-muted-foreground">
                         Ainda não tem uma conta?{' '}
-                        <Link to="/registrar" className="font-semibold text-primary hover:text-primary-dark transition-colors">
+                        <a href="#" className="font-semibold text-primary hover:text-primary-dark transition-colors">
                             Cadastre-se grátis
-                        </Link>
+                        </a>
                     </div>
 
                     {/* Section Divider */}
@@ -225,13 +235,9 @@ export default function Login() {
                         <span className="text-xs text-muted-foreground mb-3">
                             Ofereça seus serviços e gerencie sua agenda em um só lugar.
                         </span>
-                        <Link 
-                            to="/registrar" 
-                            state={{ role: 'PROFESSIONAL' }} 
-                            className="text-sm font-bold text-primary hover:text-primary-dark transition-colors flex items-center gap-1"
-                        >
+                        <a href="#" className="text-sm font-bold text-primary hover:text-primary-dark transition-colors flex items-center gap-1">
                             Venha trabalhar conosco <span aria-hidden="true">&rarr;</span>
-                        </Link>
+                        </a>
                     </div>
 
                 </div>

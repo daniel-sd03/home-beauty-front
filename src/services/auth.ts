@@ -1,17 +1,27 @@
 import { api } from './api'
 
-interface LoginResponse {
+export interface LoginResponse {
   token: string;
+  role: 'USER' | 'PROFESSIONAL' | 'ADMIN';
+  isProfileComplete: boolean;
 }
 
-export async function loginUser(login: string, password: string): Promise<string> {
+export async function loginUser(login: string, password: string): Promise<LoginResponse> {
   try {
     const response = await api.post<LoginResponse>('/auth/login', { login, password })
+    
+    // Retornando o objeto completo, como refatoramos!
+    return response.data
 
-    return response.data.token
+  } catch (error: any) {
+    const status = error.response?.status
+    const backendMessage = (error.response?.data?.message || '').toLowerCase()
 
-  } catch (error) {
-    throw new Error('E-mail ou senha inválidos. Tente novamente.')
+    if (status === 403 && (backendMessage.includes('not activated yet') || backendMessage.includes('verification code'))) {
+      throw { code: 'UNVERIFIED_EMAIL', message: 'E-mail pendente de verificação' }
+    }
+
+    throw error;
   }
 }
 
@@ -44,7 +54,7 @@ export async function verifyAccountEmail(email: string, code: string) {
   try {
     const response = await api.post('/auth/verify', {
       login: email,
-      code        
+      code
     })
     return response.data
   } catch (error: any) {
