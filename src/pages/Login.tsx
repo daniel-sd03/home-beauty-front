@@ -74,12 +74,22 @@ export default function Login() {
         setError('')
 
         try {
-            const token = await loginUser(email, password)
-            localStorage.setItem('token', token)
-            navigate('/') // Redirect to home on success
+            const response = await loginUser(email, password)
+            
+            localStorage.setItem('token', response.token)
+            localStorage.setItem('role', response.role)
+            localStorage.setItem('isProfileComplete', String(response.isProfileComplete))
+            
+            navigate('/') 
+            
         } catch (err: any) {
             console.error(err)
-            setError(err.message)
+
+            if (err.code === 'UNVERIFIED_EMAIL') {
+                return navigate('/verificar-email', { state: { email: email } })
+            }
+
+            setError(err.response?.data?.message || err.message || 'Credenciais inválidas.')
         } finally {
             setIsLoading(false)
         }
