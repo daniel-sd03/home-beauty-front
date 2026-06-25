@@ -51,8 +51,6 @@ export default function VerificarEmail() {
             }, 2000)
 
         } catch (err: any) {
-            console.error(err)
-            // Show error message from the backend
             setError(err.message)
         } finally {
             setIsLoading(false)

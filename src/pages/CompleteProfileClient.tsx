@@ -82,8 +82,7 @@ export default function CompleteProfileClient() {
             }, 2000)
             
         } catch (err: any) {
-            console.error(err)
-            setError(err.message || 'Ocorreu um erro ao salvar seus dados.')
+            setError(err.message)
         } finally {
             setIsLoading(false)
         }

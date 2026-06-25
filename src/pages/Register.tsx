@@ -74,8 +74,8 @@ export default function Register() {
 
     // Handles the form submission
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-        e.preventDefault() // Prevents page reload
-        setError('')       // Clears any previous errors
+        e.preventDefault() 
+        setError('')
 
         // Front-end validation: check if passwords match
         if (password !== confirmPassword) {
@@ -92,9 +92,7 @@ export default function Register() {
             navigate('/verificar-email', { state: { email: email } })
 
         } catch (err: any) {
-            console.error(err)
-            // Display API error message to the user
-            setError(err.message || 'Ocorreu um erro ao criar a conta.')
+            setError(err.message)
         } finally {
             setIsLoading(false) // Stop loading animation regardless of success/error
         }
