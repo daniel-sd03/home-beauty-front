@@ -14,6 +14,7 @@ export const ErrorDictionary: Record<string, string> = {
     'PROFESSIONAL_PROFILE_NOT_FOUND': 'Perfil de profissional não encontrado.',
 
     // === Data Validation (Inputs and Forms) ===
+    'CPF_ALREADY_EXISTS': 'Este CPF já está cadastrado no sistema.',
     'INVALID_CPF': 'O CPF informado é inválido. Verifique os números e tente novamente.',
     'INVALID_EMAIL': 'O e-mail informado possui um formato inválido.',
 }
