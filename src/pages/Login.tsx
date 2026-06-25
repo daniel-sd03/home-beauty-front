@@ -83,13 +83,12 @@ export default function Login() {
             navigate('/inicio') 
             
         } catch (err: any) {
-            console.error(err)
 
-            if (err.code === 'UNVERIFIED_EMAIL') {
+            if (err.code === 'ACCOUNT_DISABLED') {
                 return navigate('/verificar-email', { state: { email: email } })
             }
-
-            setError(err.response?.data?.message || err.message || 'Credenciais inválidas.')
+            
+            setError(err.message)
         } finally {
             setIsLoading(false)
         }

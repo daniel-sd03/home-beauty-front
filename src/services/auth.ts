@@ -7,21 +7,8 @@ export interface LoginResponse {
 }
 
 export async function loginUser(login: string, password: string): Promise<LoginResponse> {
-  try {
-    const response = await api.post<LoginResponse>('/auth/login', { login, password })
-
-    return response.data
-
-  } catch (error: any) {
-    const status = error.response?.status
-    const backendMessage = (error.response?.data?.message || '').toLowerCase()
-
-    if (status === 403 && (backendMessage.includes('not activated yet') || backendMessage.includes('verification code'))) {
-      throw { code: 'UNVERIFIED_EMAIL', message: 'E-mail pendente de verificação' }
-    }
-
-    throw error;
-  }
+  const response = await api.post<LoginResponse>('/auth/login', { login, password })
+  return response.data
 }
 
 export async function registerUser(
@@ -31,22 +18,15 @@ export async function registerUser(
   password: string,
   role: 'USER' | 'PROFESSIONAL'
 ) {
-  try {
-    const response = await api.post('/auth/register', {
-      firstName,
-      lastName,
-      login: email,
-      password,
-      role
-    })
-
-    return response.data
-  } catch (error: any) {
-    if (error.response && error.response.data && error.response.data.message) {
-      throw new Error(error.response.data.message)
-    }
-    throw new Error('Não foi possível criar sua conta. Verifique os dados e tente novamente.')
-  }
+  // Let the global interceptor handle the errors automatically
+  const response = await api.post('/auth/register', {
+    firstName,
+    lastName,
+    login: email,
+    password,
+    role
+  })
+  return response.data
 }
 
 export async function completeClientProfile(phone: string, cpf: string, birthDate: string, gender: string) {
@@ -84,32 +64,18 @@ export async function completeProfessionalProfile(
   return response.data
 }
 
-
 export async function verifyAccountEmail(email: string, code: string) {
-  try {
-    const response = await api.post('/auth/verify', {
-      login: email,
-      code
-    })
-    return response.data
-  } catch (error: any) {
-    if (error.response && error.response.data && error.response.data.message) {
-      throw new Error(error.response.data.message)
-    }
-    throw new Error('Código inválido ou expirado. Tente novamente.')
-  }
+  // Errors like 'INVALID_VERIFICATION_CODE' will be translated in api.ts
+  const response = await api.post('/auth/verify', {
+    login: email,
+    code
+  })
+  return response.data
 }
 
 export async function resendCodeEmail(email: string) {
-  try {
-    const response = await api.post('/auth/resend-code', {
-      login: email
-    })
-    return response.data
-  } catch (error: any) {
-    if (error.response && error.response.data && error.response.data.message) {
-      throw new Error(error.response.data.message)
-    }
-    throw new Error('Não foi possível reenviar o código. Tente novamente mais tarde.')
-  }
+  const response = await api.post('/auth/resend-code', {
+    login: email
+  })
+  return response.data
 }
